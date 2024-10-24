@@ -29,16 +29,26 @@ import {
 import { list_approval } from '../../../actions/approval/list_approval'
 import { approve_approval } from '../../../actions/approval/approve_approval'
 import { reject_approval } from '../../../actions/approval/reject_approval'
+import { create_approval } from '../../../actions/approval/create_approval'
 import { confirm } from '../../../components/sub/swal'
+import CreateApprovalModal from './modal/CreateApprovalModal'
+import { error as errorSwal } from '../../../components/sub/swal'
 
 const Approval = () => {
   const [afterRender, setAfterRender] = useState(false)
-  // const [data, setData] = useState([])
+  const [reason, setReason] = useState('')
+  const [error, setError] = useState([])
 
+  const [modal, setModal] = useState(false)
+  const toggleModal = ()=> setModal(e=> !e)
+
+  //SECTION - hook
   const {result,  loading, doList} = list_approval()
   const {result:resultApprove, loading:loadingApprove, doApprove} = approve_approval()
   const {result:resultReject, loading:loadingReject, doReject} = reject_approval()
+  const {result:resulCreate, loading:loadingCreate, doCreate} = create_approval()
 
+  //SECTION - init
   useEffect(()=>{
     doList()
     setAfterRender(true)
@@ -54,9 +64,6 @@ const Approval = () => {
     if (afterRender && !resultApprove.error){
       doList()
     }
-    if (afterRender && resultApprove.error){
-
-    }
   }, [resultApprove])
 
   //SECTION - reject
@@ -69,10 +76,27 @@ const Approval = () => {
     if (afterRender && !resultReject.error){
       doList()
     }
-    if (afterRender && resultReject.error){
-
-    }
   }, [resultReject])
+
+  //SECTION - create
+  const handleCreate = ()=>{
+    doCreate({
+      reason
+    })
+  }
+
+  useEffect(()=>{
+    console.log('create',resulCreate)
+    if (afterRender && !resulCreate.error){
+      toggleModal()
+      doList()
+    }else if(afterRender && resulCreate.error && resulCreate.status==400){
+      console.log(resulCreate.data.errora)
+      setError(resulCreate.data.error)
+    }else if(afterRender && resulCreate.error && resulCreate.status==500){
+      errorSwal(resulCreate.data.message)
+    }
+  }, [resulCreate])
 
   return (
     <React.Fragment>
@@ -83,7 +107,10 @@ const Approval = () => {
                 <strong>Approval</strong>
               </CCardHeader>
               <CCardBody>
-                <p className="text-body-secondary small">List of request approval.</p>
+                <div className='d-flex flex-wrap'>
+                  <p className="text-body-secondary small">List of request approval.</p>
+                  <CButton className='ms-auto' color='info' onClick={toggleModal}>Create</CButton>
+                </div>
                 <CTable>
                   <CTableHead>
                     <CTableRow>
@@ -128,6 +155,16 @@ const Approval = () => {
             </CCard>
           </CCol>
         </CRow>
+
+        <CreateApprovalModal
+          modal={modal}
+          toggleModal={toggleModal}
+
+          reason={reason}
+          setReason={setReason}
+          handleCreate={handleCreate}
+          error={error}
+        />
     </React.Fragment>
   )
 }
