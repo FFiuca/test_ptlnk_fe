@@ -5,7 +5,7 @@ export const check_logged_in = async ()=>{
 
     let res
     try {
-      res = await axios.get(config.API.USER_URL, {
+      res = await axios.get(config.API.USER_URL+'/', {
         headers: {
           Authorization : 'Bearer ' + localStorage.getItem('token')
         }

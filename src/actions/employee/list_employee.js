@@ -25,7 +25,7 @@ export const list_employee =  ()=>{
 
     toggleLoading()
     try {
-      res = await axios.get(config.API.USER_URL+'/user', {
+      res = await axios.get(config.API.USER_URL+'/user/', {
         headers: {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer '+localStorage.getItem('token')

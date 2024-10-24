@@ -25,7 +25,7 @@ export const list_approval =  ()=>{
 
     toggleLoading()
     try {
-      res = await axios.get(config.API.USER_URL+'/approval', {
+      res = await axios.get(config.API.USER_URL+'/approval/', {
         headers: {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer '+localStorage.getItem('token')

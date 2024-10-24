@@ -25,7 +25,7 @@ export const approve_approval =  ()=>{
 
     toggleLoading()
     try {
-      res = await axios.patch(config.API.USER_URL+'/approval/'+id+'/approve', {},{
+      res = await axios.patch(config.API.USER_URL+'/approval/'+id+'/approve/', {},{
         headers: {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer '+localStorage.getItem('token')

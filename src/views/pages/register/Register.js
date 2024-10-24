@@ -17,6 +17,7 @@ import { register } from '../../../actions/auth/register'
 import ErrorTextForm from '../../../components/sub/ErrorTextForm'
 import { extractValidationErrorField } from '../../../helpers/common_helper'
 import { useNavigate } from 'react-router-dom'
+import { error as errorSwal } from '../../../components/sub/swal'
 
 const Register = () => {
   const nav = useNavigate()
@@ -51,6 +52,8 @@ const Register = () => {
     }else if(afterRender && result.error && result.status==400){
       console.log(result.data.errora)
       setError(result.data.error)
+    }else if(afterRender && result.error && result.status==500){
+      errorSwal(result.data.message)
     }
   }, [result])
 

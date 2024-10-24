@@ -54,15 +54,15 @@ const Employee = React.lazy(()=>  import('./views/pages/employee'))
 
 const Widgets = React.lazy(() => import('./views/widgets/Widgets'))
 
-const Tasks = React.lazy(()=> import('./views/pages/tasks/home'))
 const Approval = React.lazy(()=> import('./views/pages/approval'))
 
 import CheckLoggedIn from './views/pages/auth/CheckLoggedIn'
 import ProtectedRoute from './components/ProtectedRoute'
 
 const routes = [
-  { path: '/', exact: true, name: 'Home' },
-  { path: '/dashboard', name: 'Dashboard', element: Tasks },
+  // { path: '/', exact: true, name: 'Home' },
+  { path: '/dashboard', name: 'Dashboard', element: Dashboard },
+  { path: '/lnk/fe', name: 'lnk fe', element: Dashboard },
   { path: '/employee', name: 'Daftar Karyawan', element: ()=>(<ProtectedRoute><Employee /></ProtectedRoute>) },
   { path: '/approval', name: 'Approval', element: ()=> (<ProtectedRoute><Approval /></ProtectedRoute>) },
   { path : '/check_logged_in', name: 'Check Logged In', element: CheckLoggedIn},

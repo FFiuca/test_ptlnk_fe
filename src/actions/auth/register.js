@@ -30,7 +30,7 @@ export const register =  ()=>{
 
     toggleLoading()
     try {
-      res = await axios.post(config.API.GUEST_URL+'/auth/register', {
+      res = await axios.post(config.API.GUEST_URL+'/auth/register/', {
         username,
         name,
         password,
@@ -63,7 +63,6 @@ export const register =  ()=>{
   return {
     result,
     loading,
-    result,
     doRegister
   }
 }

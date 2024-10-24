@@ -25,7 +25,7 @@ export const reject_approval =  ()=>{
 
     toggleLoading()
     try {
-      res = await axios.patch(config.API.USER_URL+'/approval/'+id+'/reject', {},{
+      res = await axios.patch(config.API.USER_URL+'/approval/'+id+'/reject/', {},{
         headers: {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer '+localStorage.getItem('token')

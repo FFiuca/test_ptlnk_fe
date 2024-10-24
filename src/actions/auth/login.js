@@ -25,7 +25,7 @@ export const login =  ()=>{
 
     toggleLoading()
     try {
-      res = await axios.post(config.API.GUEST_URL+'/auth/login', {
+      res = await axios.post(config.API.GUEST_URL+'/auth/login/', {
         username,
         password
       })
@@ -55,7 +55,6 @@ export const login =  ()=>{
   return {
     result,
     loading,
-    result,
     doLogin
   }
 }
